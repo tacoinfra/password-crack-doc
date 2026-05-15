@@ -57,7 +57,7 @@ Optional requirements:
 
 This tutorial explains how to:
 
-1. install John the Ripper and GPU drivers on [Windows](02_windows-install.md), [Linux](03_linux-install.md), and [MacOS](04_macos-install.md)
+1. install John the Ripper and GPU drivers on [Windows](02_windows-install.md), [Linux](03_linux-install.md), and [macOS](04_macos-install.md)
 
 1. [generate the `hashes` file](05_generate-hashes.md) John the Ripper uses for processing, and
 

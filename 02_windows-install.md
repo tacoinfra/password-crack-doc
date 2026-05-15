@@ -5,7 +5,7 @@ date: 2026-05-14
 author: Craig Buckler
 ---
 
-# How install password recovery software on Windows
+# How to install password recovery software on Windows
 
 A pre-compiled version of John the Ripper is available for Windows from [github.com/openwall/john-packages/releases/latest](https://github.com/openwall/john-packages/releases/latest).
 

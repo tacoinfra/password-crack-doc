@@ -5,7 +5,7 @@ date: 2026-05-14
 author: Craig Buckler
 ---
 
-# How install password recovery software on Linux
+# How to install password recovery software on Linux
 
 Although flatpak versions of John the Ripper are [available for Linux](https://github.com/openwall/john-packages/releases/latest), compiling the application on your local system provides better performance:
 

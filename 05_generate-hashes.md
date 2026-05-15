@@ -19,12 +19,12 @@ JtR provides a `tezos2john.py` Python script in its `run` directory that generat
 python3 tezos2john.py '<seed-words>' '<email>' '<tzAddress>'
 ```
 
-Generating the hash is a one-off task. You can install Python, but using Docker is easier.
+Generating the hash is a one-off task. You can install Python, but using Docker may be easier.
 
 
 ## Generating your `hashes` file using Docker
 
-If you do not have Python installed, you can use [Docker](https://www.docker.com/) to run it from a container. Docker Desktop is available for [Windows](https://docs.docker.com/desktop/setup/install/windows-install/), [Linux](https://docs.docker.com/desktop/setup/install/linux/), and [MacOS](https://docs.docker.com/desktop/setup/install/mac-install/).
+If you do not have Python installed, you can use [Docker](https://www.docker.com/) to run it from a container. Docker Desktop is available for [Windows](https://docs.docker.com/desktop/setup/install/windows-install/), [Linux](https://docs.docker.com/desktop/setup/install/linux/), and [macOS](https://docs.docker.com/desktop/setup/install/mac-install/).
 
 Once you have installed Docker Desktop:
 
@@ -32,10 +32,10 @@ Once you have installed Docker Desktop:
 
 1. `cd` to the John the Ripper `run` directory.
 
-1. Run the following command on Linux or MacOS, replacing the seed words, email, tz address, and `~/tezos/hashes` location as necessary:
+1. Run the following command on Linux or macOS, replacing the seed words, email, tz address, and `~/tezos/hashes` location as necessary:
 
     ```bash
-    # generate hash (Linux/MacOS example)
+    # generate hash (Linux/macOS example)
     docker run -it --rm --name python \
       -v ${PWD}:/usr/src/myapp \
       -w /usr/src/myapp \
@@ -57,7 +57,7 @@ Once you have installed Docker Desktop:
 
 ## Generating your `hashes` file using Python
 
-Some Linux distros provide Python by default and downloads are available for [Windows](https://www.python.org/downloads/windows/) and [MacOS](https://www.python.org/downloads/macos/).
+Some Linux distros provide Python by default and downloads are available for [Windows](https://www.python.org/downloads/windows/) and [macOS](https://www.python.org/downloads/macos/).
 
 > Note: you could use a Linux virtual machine or WSL2. Copy `tezos2john.py` and the `bip-0039` subdirectory from the JtR `run` directory into the VM and run it there.
 
@@ -67,10 +67,10 @@ Once you have installed Python:
 
 1. `cd` to the John the Ripper `run` directory.
 
-1. Run the following command on Linux or MacOS, replacing the seed words, email, tz address, and `hashes` location as necessary:
+1. Run the following command on Linux or macOS, replacing the seed words, email, tz address, and `hashes` location as necessary:
 
     ```bash
-    # generate hash (Linux/MacOS example)
+    # generate hash (Linux/macOS example)
     python3 tezos2john.py \
       'tezos secret seed phrase used to create your wallet that stores coins for spending later' \
       'your@email.com' \

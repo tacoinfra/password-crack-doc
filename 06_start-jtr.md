@@ -11,7 +11,7 @@ This section describes four strategies for running John the Ripper depending on 
 
 At this point, you should have:
 
-1. installed John the Ripper on [Windows](02_windows-install.md), [Linux](03_linux-install.md), or [MacOS](04_macos-install.md)
+1. installed John the Ripper on [Windows](02_windows-install.md), [Linux](03_linux-install.md), or [macOS](04_macos-install.md)
 
 1. know whether you have a supported GPU by running `john --list=opencl-devices`
 
@@ -59,7 +59,7 @@ For now, press `q` or `Ctrl`|`Cmd` + `C` to stop processing.
 
 ### Using your GPU
 
-If you have a supported OpenCL GPU (see output of `john --list=opencl-devices`), adding the option `--format=tezos-opencl` to the `john` command will increase processing performance by offloading processing to that device.
+If you have a supported OpenCL GPU (see output of `john --list=opencl-devices`), adding the `--format=tezos-opencl` option to the `john` command increases performance by offloading processing to that device.
 
 If your PC has more than one graphics card, you can target a specific device or devices using a comma-delimited list, e.g. `--devices=1` or `--devices=1,3`. Device 1 is the first GPU shown in the output of `john --list=opencl-devices`.
 
@@ -82,7 +82,7 @@ You can set both `--min-length` and `--max-length`.
 
 ### Saving and restoring sessions
 
-JtR can save progress to a `.rec` file so you can stop and restore a session without having to restart processing from scratch. This means you can reboot your PC or run JtR when you're not using your device (JtR can run for a long time using significant CPU and/or GPU time).
+JtR can save progress to a `.rec` file so you can stop and restore a session without having to restart processing from scratch. This means you can reboot your PC or run JtR when you're not using your device (JtR runs for a long time and uses significant CPU and/or GPU time).
 
 To save session progress, set the `--session=NAME` option, e.g. `--session=tezos`. A `tezos.rec` file is then saved to your working directory.
 
@@ -113,7 +113,7 @@ Press `q` or `Ctrl`|`Cmd` + `C` to stop processing. To restart, enter:
 john --restore=tezos
 ```
 
-A quick run may be successful if you have a short password based on your name or a commonly-used word. However, [masking](#masking-run), [word list](#word-list-run), and [PRINCE mode](#prince-mode-run) runs offer a better chance of recovery.
+A quick run may be successful if you have a short password based on your name or a commonly-used word. However, [masking](#masking-run), [wordlist](#wordlist-run), and [PRINCE mode](#prince-mode-run) runs offer a better chance of recovery.
 
 
 ## Masking run
@@ -136,10 +136,10 @@ where:
 * `[...]` defines a range or choice of letters: `R` or `r`, followed by `o` or `0`
 * `?s` defines a special character that's not a letter or digit
 * `?d` defines a digit
-* `?u` defines an uppercase character
+* `?u` defines an uppercase letter
 * other characters are as-is: `ver`
 
-JtR can use this pattern to create a list of all possibilities, including:
+JtR uses this pattern to create a list of all possibilities, including:
 
 ```txt
 Rover!1900AA
@@ -149,7 +149,7 @@ R0ver&2000YY
 r0ver-2099ZZ
 ```
 
-All candidates would be 12 characters because that's what the `mask` specifies. If you set `--max-length=13`, JtR repeats the last character type. As well as testing `Rover!1900AA`, JtR would also test `Rover!1900AAA`, `Rover!1900AAB`, and so on.
+All candidates would be 12 characters because that's what the `mask` specifies. If you set `--max-length=13`, JtR repeats the last character type so, as well as testing `Rover!1900AA`, it also tests `Rover!1900AAA`, `Rover!1900AAB`, and so on.
 
 Example command for a masking run:
 
@@ -160,7 +160,7 @@ john --format=tezos-opencl --no-log --session=tezos --mask=[Rr][o0]ver?s[12][90]
 > Note: omit `--format=tezos-opencl` if you do not have a compatible GPU.
 
 
-## Word list run
+## Wordlist run
 
 You may have a list of passwords you typically use, such as family names and weekdays, e.g.
 

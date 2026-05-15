@@ -1,13 +1,13 @@
 ---
-title: How to install password recovery software on MacOS
-description: How to install John the Ripper and other software components on MacOS.
+title: How to install password recovery software on macOS
+description: How to install John the Ripper and other software components on macOS.
 date: 2026-05-14
 author: Craig Buckler
 ---
 
-# How install password recovery software on MacOS
+# How to install password recovery software on macOS
 
-Precompiled versions of John the Ripper are [available for MacOS](https://github.com/openwall/john-packages/releases/latest), and you can also install it using `brew install john-jumbo`. However, compiling the application on your local system provides better performance:
+Precompiled versions of John the Ripper are [available for macOS](https://github.com/openwall/john-packages/releases/latest), and you can also install it using `brew install john-jumbo`. However, compiling the application on your local system provides better performance:
 
 ```bash
 cd ~
@@ -63,7 +63,7 @@ john --list=build-info
 
 ## GPU support
 
-JtR communicates with your graphics card using OpenCL (Open Computing Language).Apple M chips support OpenCL so there should be nothing to install or configure.
+JtR communicates with your graphics card using OpenCL (Open Computing Language). Apple M chips support OpenCL so there should be nothing to install or configure.
 
 Check whether JtR can access your GPUs:
 
