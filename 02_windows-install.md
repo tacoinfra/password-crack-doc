@@ -17,7 +17,7 @@ The `C:\JtR\run` directory provides JtR executables. You can run `john.exe` from
 C:\JtR\run\john
 ```
 
-Alternatively, you can update your `PATH` environment variable temporarily so `john.exe` can be executed from anywhere:
+Alternatively, you can update your `PATH` environment variable temporarily to execute `john.exe` from anywhere:
 
 ```ps
 # do after opening Powershell
@@ -27,7 +27,7 @@ $env:path += ";C:\JtR\run\"
 john
 ```
 
-Finally, you can permanently update your `PATH` environment variable if you want to use JtR regularly:
+Or you can permanently update your `PATH` environment variable if you intend using JtR regularly:
 
 1. Click **Start** and type "environment variables" or choose **Start** > **Settings** > **System** > **About** > **Advanced system settings**.
 
@@ -40,6 +40,7 @@ Finally, you can permanently update your `PATH` environment variable if you want
 This tutorial presumes you can run `john` from anywhere. Test it works:
 
 ```ps
+cd \
 john --list=build-info
 ```
 
@@ -59,3 +60,5 @@ You will either see a list of devices or an error such as *"Error: No OpenCL-cap
 ```ps
 john --test --format=tezos-opencl
 ```
+
+You can now [proceed to generating your hashes file...](05_generate-hashes.md)

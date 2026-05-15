@@ -7,7 +7,7 @@ author: Craig Buckler
 
 # How install password recovery software on Linux
 
-Although flatpak versions of John the Ripper are [available for Linux](https://github.com/openwall/john-packages/releases/latest), compiling the application on your local system provides better performance.
+Although flatpak versions of John the Ripper are [available for Linux](https://github.com/openwall/john-packages/releases/latest), compiling the application on your local system provides better performance:
 
 ```bash
 cd ~
@@ -31,7 +31,7 @@ For the purposes of this tutorial, we'll assume you've installed JtR to `~/john`
 ~/john/run/john
 ```
 
-Alternatively, you can update your `PATH` environment variable temporarily so `john` can be executed from anywhere:
+Alternatively, you can update your `PATH` environment variable temporarily to execute `john.exe` from anywhere:
 
 ```bash
 # do after opening terminal
@@ -68,6 +68,8 @@ sudo apt update
 sudo apt install -y nvidia-opencl-dev clinfo
 ```
 
+Linux drivers for AMD graphics cards are available from [amd.com](https://www.amd.com/en/support/download/linux-drivers.html).
+
 Check whether JtR can access your GPUs:
 
 ```bash
@@ -79,3 +81,5 @@ You will either see a list of devices or an error such as *"Error: No OpenCL-cap
 ```bash
 john --test --format=tezos-opencl
 ```
+
+You can now [proceed to generating your hashes file...](05_generate-hashes.md)

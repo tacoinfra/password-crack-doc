@@ -7,7 +7,7 @@ author: Craig Buckler
 
 # How install password recovery software on MacOS
 
-Precompiled versions of John the Ripper are [available for MacOS](https://github.com/openwall/john-packages/releases/latest), and you can also install it using `brew install john-jumbo`. However, compiling the application on your local system provides better performance.
+Precompiled versions of John the Ripper are [available for MacOS](https://github.com/openwall/john-packages/releases/latest), and you can also install it using `brew install john-jumbo`. However, compiling the application on your local system provides better performance:
 
 ```bash
 cd ~
@@ -35,7 +35,7 @@ For the purposes of this tutorial, we'll assume you've installed JtR to `~/john`
 ~/john/run/john
 ```
 
-Alternatively, you can update your `PATH` environment variable temporarily so `john` can be executed from anywhere:
+Alternatively, you can update your `PATH` environment variable temporarily to execute `john.exe` from anywhere:
 
 ```bash
 # do after opening terminal
@@ -76,3 +76,5 @@ You will either see a list of devices or an error such as *"Error: No OpenCL-cap
 ```bash
 john --test --format=tezos-opencl
 ```
+
+You can now [proceed to generating your hashes file...](05_generate-hashes.md)
