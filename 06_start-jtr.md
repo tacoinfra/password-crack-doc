@@ -13,24 +13,26 @@ At this point, you should have:
 
 1. installed John the Ripper on [Windows](02_windows-install.md), [Linux](03_linux-install.md), or [macOS](04_macos-install.md)
 
-1. know whether you have a supported GPU by running `john --list=opencl-devices`
+1. tested whether you have a supported GPU by running `john --list=opencl-devices`
 
 1. created a `tezos` working directory, and
 
 1. generated a `hashes` file inside that directory.
 
-`cd` to your `tezos` folder and ensure you can run `john` by either setting your `PATH` environment variable or using its fully-qualified path.
+`cd` to your `tezos` working directory and check you can run `john` by either setting your `PATH` environment variable or using its fully-qualified path.
+
+> Note: check your device's power options to ensure it will not sleep after a period of user inactivity.
 
 
-## Quick run
+## 1. Quick run
 
-You can run JtR with the following command -- *but don't do it yet!*
+You run JtR using the command format:
 
 ```bash
 john [options] hashes
 ```
 
-JtR offers dozens of options. View the help by entering `john --help`.
+JtR offers dozens of `[options]`. View the help by entering `john --help`.
 
 The simplest way to start password recovery is:
 
@@ -40,13 +42,13 @@ john hashes
 
 JtR attempts quick wins such as combinations of your user name and common passwords. It then starts incremental recovery where it attempts millions of combinations of characters.
 
-Press space to show the current status:
+Press space to show the current status, e.g.
 
 ```txt
 0g 0:00:00:22 0.01% 2/3 (ETA: 2026-05-18 07:04) 0g/s 21937p/s 21937c/s 21937C/s goodday12..291052
 ```
 
-The displays the:
+It displays the:
 
 * total processing time
 * percentage complete
@@ -59,7 +61,7 @@ For now, press `q` or `Ctrl`|`Cmd` + `C` to stop processing.
 
 ### Using your GPU
 
-If you have a supported OpenCL GPU (see output of `john --list=opencl-devices`), adding the `--format=tezos-opencl` option to the `john` command increases performance by offloading processing to that device.
+If you have a supported OpenCL graphics card (see output of `john --list=opencl-devices`), adding the `--format=tezos-opencl` option to the `john` command increases performance by offloading processing to the GPU.
 
 If your PC has more than one graphics card, you can target a specific device or devices using a comma-delimited list, e.g. `--devices=1` or `--devices=1,3`. Device 1 is the first GPU shown in the output of `john --list=opencl-devices`.
 
@@ -82,9 +84,9 @@ You can set both `--min-length` and `--max-length`.
 
 ### Saving and restoring sessions
 
-JtR can save progress to a `.rec` file so you can stop and restore a session without having to restart processing from scratch. This means you can reboot your PC or run JtR when you're not using your device (JtR runs for a long time and uses significant CPU and/or GPU time).
+JtR can save progress to a `.rec` file so you can stop and restore a recovery session without having to restart processing from scratch. This means you can reboot your PC or run JtR when you're not using your device (JtR can run for a long time and use significant CPU and/or GPU time).
 
-To save session progress, set the `--session=NAME` option, e.g. `--session=tezos`. A `tezos.rec` file is then saved to your working directory.
+To save session progress, set the `--session=NAME` option, e.g. `--session=tezos`. A `tezos.rec` file is then created to your working directory.
 
 You can examine the status of a running process with:
 
@@ -101,7 +103,7 @@ john --restore=tezos
 
 ### Example command
 
-From your `tezos` working directory, start a quick run on a GPU, without logs, using a session named `tezos`, looking for a password between 7 and 9 characters, using the `hashes` file:
+From your `tezos` working directory, start a quick run on a GPU, without logs, using a session named `tezos`, looking for a password between 7 and 9 characters, using your `hashes` file:
 
 ```bash
 john --format=tezos-opencl --no-log --session=tezos --min-length=7 --max-length=9 hashes
@@ -113,10 +115,10 @@ Press `q` or `Ctrl`|`Cmd` + `C` to stop processing. To restart, enter:
 john --restore=tezos
 ```
 
-A quick run may be successful if you have a short password based on your name or a commonly-used word. However, [masking](#masking-run), [wordlist](#wordlist-run), and [PRINCE mode](#prince-mode-run) runs offer a better chance of recovery.
+A quick run may be successful if you have a short password based on your name or a commonly-used word. However, [masking](#2-masking-run), [wordlist](#3-wordlist-run), and [PRINCE mode](#4-prince-mode-run) runs offer a better chance of recovery.
 
 
-## Masking run
+## 2. Masking run
 
 You may use specific techniques or patterns when devising passwords. For example, you generally use:
 
@@ -125,27 +127,28 @@ You may use specific techniques or patterns when devising passwords. For example
 1. A four-digit year which could start with `19` or `20`.
 1. Two uppercase letters.
 
-JtR provides a `--mask` option that allows you to define a template using [special character codes](https://github.com/openwall/john/blob/bleeding-jumbo/doc/MASK). For the password above, you'd use:
+JtR provides a `--mask` option that allows you to define a password template using [special character codes](https://github.com/openwall/john/blob/bleeding-jumbo/doc/MASK). For the password above, you'd use:
 
 ```bash
 --mask=[Rr][o0]ver?s[12][90]?d?d?u?u
 ```
 
-where:
+Character codes include:
 
-* `[...]` defines a range or choice of letters: `R` or `r`, followed by `o` or `0`
-* `?s` defines a special character that's not a letter or digit
+* `[...]` defines a range or choice of letters (such as `R` or `r` above)
+* `?s` defines a special character that's not a letter or a digit
 * `?d` defines a digit
 * `?u` defines an uppercase letter
-* other characters are as-is: `ver`
+* `?l` defines a lowercase letter
+* other characters are as-is (such as `ver` above)
 
 JtR uses this pattern to create a list of all possibilities, including:
 
 ```txt
 Rover!1900AA
 Rover#1900AB
-Rover*1901XX
-R0ver&2000YY
+Rover*1999XX
+R0ver&2005YY
 r0ver-2099ZZ
 ```
 
@@ -160,7 +163,7 @@ john --format=tezos-opencl --no-log --session=tezos --mask=[Rr][o0]ver?s[12][90]
 > Note: omit `--format=tezos-opencl` if you do not have a compatible GPU.
 
 
-## Wordlist run
+## 3. Wordlist run
 
 You may have a list of passwords you typically use, such as family names and weekdays, e.g.
 
@@ -204,9 +207,9 @@ john --format=tezos-opencl --no-log --session=tezos --wordlist=wordlist.txt --ru
 > Note: omit `--format=tezos-opencl` if you do not have a compatible GPU.
 
 
-## PRINCE mode run
+## 4. PRINCE mode run
 
-You may generate your passwords using certain names, symbol combinations, specific years, or other string snippets, e.g.
+You may use certain names, symbol combinations, specific years, or other snippets that you combine into a single password, e.g.
 
 ```txt
 !$
@@ -226,12 +229,24 @@ CHRIS
 Chris
 anne
 bob
+b0b
 chris
 ```
 
-Save these to a file in your working directory named `wordpart.txt` and sort lines into ascending ASCII order (most editors provide that option or you can use an [online tool](https://www.textfixer.com/tools/sort-lines-alphabetically-online.php)).
+Include your known capitalization and symbol replacements then save these to a file in your working directory named `wordpart.txt`. Sort lines into ascending ASCII order using an editor or tool:
 
-JtR's PRINCE (PRobability INfinite Chained Elements) mode takes items from a wordlist and generates candidates by concatenating them in every possible order. The possibilities would include:
+* VS Code: `Ctrl`|`Cmd` + `Shift` + `P` then enter and choose `Sort Lines Ascending`
+* Sublime Text: select all lines, then Edit > Sort Lines
+* Notepad++: Edit > Line Operations > Sort Lines Lexicographically Ascending
+* gedit: select all lines, then Tools > Sort...
+* vi: `:!sort`
+* emacs: `M-x mark-whole-buffer` followed by `M-x sort-lines`
+* Linux/macOS terminal: `sort wordpart.txt > wordpart-sorted.txt`
+* or an [online tool](https://www.textfixer.com/tools/sort-lines-alphabetically-online.php).
+
+Also ensure you remove all blank and duplicate lines.
+
+JtR's PRINCE (PRobability INfinite Chained Elements) mode takes items from your wordlist and generates password candidates by concatenating them in every possible combination. The possibilities would include:
 
 ```txt
 Anne!$
@@ -268,22 +283,29 @@ In this case, the recovered password is `Password123`.
 
 > Note: do **not** share your `john.pot` file with anyone!
 
+Once recovered:
+
+1. Record your password in a secure place, such as a password manager.
+1. Delete your `hashes` and `john.pot` files, ideally using a secure deletion tool to overwrite the data.
+1. If you do not require JtR again, delete its directory and `PATH` environment variable.
+
 
 ## More recovery options
 
-If the suggested strategies do not work for you, John the Ripper has many more password recovery options.
+If the suggested strategies do not help recover your Tezos password, John the Ripper offers further password recovery options.
 
 * [John the Ripper home page](https://www.openwall.com/john/)
 * [John the Ripper documentation](https://www.openwall.com/john/doc/)
+* [John the Ripper step-by-step tutorials](https://openwall.info/wiki/john/tutorials)
 
 This tutorial uses the *bleeding-jumbo* release which provides community enhancements:
 
 * [JtR bleeding-jumbo on Github](https://github.com/openwall/john/tree/bleeding-jumbo)
 
-You can use a wordlist generator to create password candidate files from a smaller list of suggestions:
+You can use wordlist generators to create password candidate files from a smaller list of suggestions:
 
-* [Passwords generator](https://weakpass.com/tools/passgen)
-* [Custom Wordlist Generator](https://password-strength-analyzer-tool.vercel.app/)
-* [wgen.io](https://app.wgen.io/)
-* [COOK](https://github.com/glitchedgitz/cook)
-* [GENOVEVA](https://github.com/joseaguardia/GENOVEVA)
+* [Passwords generator](https://weakpass.com/tools/passgen) (online tool)
+* [Custom Wordlist Generator](https://password-strength-analyzer-tool.vercel.app/) (online tool)
+* [wgen.io](https://app.wgen.io/) (online tool)
+* [COOK](https://github.com/glitchedgitz/cook) (Go app)
+* [GENOVEVA](https://github.com/joseaguardia/GENOVEVA) (shell app)

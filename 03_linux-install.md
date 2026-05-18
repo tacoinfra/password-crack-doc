@@ -25,7 +25,7 @@ cd john/src && ./configure && make -s clean && make -sj4
 cd ../run/ && ./john --list=build-info
 ```
 
-For the purposes of this tutorial, we'll assume you've installed JtR to `~/john` and the `~/john/run` directory provides JtR executables. You can run `john` from the terminal using the full path, e.g.
+For the purposes of this tutorial, we'll assume you've installed JtR to `~/john` so the `~/john/run` directory provides JtR executables. You can run `john` from the terminal using the full path, e.g.
 
 ```bash
 ~/john/run/john
